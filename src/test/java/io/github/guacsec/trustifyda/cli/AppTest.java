@@ -78,7 +78,7 @@ class AppTest extends ExhortTest {
           () ->
               printLine(
                   contains(
-                      "java -jar trustify-da-java-client-cli.jar <COMMAND> <FILE_PATH>"
+                      "java -jar trustify-da-java-client-cli.jar <COMMAND> <ARGUMENTS>"
                           + " [OPTIONS]")));
     }
   }
@@ -102,7 +102,7 @@ class AppTest extends ExhortTest {
           () ->
               printLine(
                   contains(
-                      "java -jar trustify-da-java-client-cli.jar <COMMAND> <FILE_PATH>"
+                      "java -jar trustify-da-java-client-cli.jar <COMMAND> <ARGUMENTS>"
                           + " [OPTIONS]")));
     }
   }
@@ -115,6 +115,8 @@ class AppTest extends ExhortTest {
       mockedAppUtils.verify(() -> printLine(contains("COMMANDS:")));
       mockedAppUtils.verify(() -> printLine(contains("stack <file_path> [--summary|--html]")));
       mockedAppUtils.verify(() -> printLine(contains("component <file_path> [--summary]")));
+      mockedAppUtils.verify(
+          () -> printLine(contains("image <image_ref> [<image_ref>...] [--summary|--html]")));
     }
   }
 
@@ -394,9 +396,11 @@ class AppTest extends ExhortTest {
   void command_enum_should_have_correct_values() {
     assertThat(Command.STACK).isNotNull();
     assertThat(Command.COMPONENT).isNotNull();
-    assertThat(Command.values()).hasSize(2);
+    assertThat(Command.IMAGE).isNotNull();
+    assertThat(Command.values()).hasSize(3);
     assertThat(Command.valueOf("STACK")).isEqualTo(Command.STACK);
     assertThat(Command.valueOf("COMPONENT")).isEqualTo(Command.COMPONENT);
+    assertThat(Command.valueOf("IMAGE")).isEqualTo(Command.IMAGE);
   }
 
   @Test
